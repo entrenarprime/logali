@@ -1,0 +1,133 @@
+@Metadata.layer: #CORE
+// 1 #CUSTOMER
+// 2 #PARTNER
+// 3 #LOCALIZATION
+// 4 #INDUSTRY
+// 5 #CORE
+
+//INICIO HEADER INFO
+@Search.searchable: true
+@UI:{ headerInfo: {   typeName: 'Header',
+                      typeNamePlural: 'Headers',
+                      imageUrl: 'IMAGEURL',  //case-sensitive
+                      title: {    type: #STANDARD,
+                                  label: 'Header',
+                                  value: 'ID' } },
+
+      presentationVariant: [{ sortOrder: [{ by: 'ID',
+                                            direction: #ASC }],
+      visualizations: [{ type: #AS_LINEITEM }] }]
+ }
+//FIN HEADER INFO
+
+annotate view zc_header_4034 with
+{
+
+  @UI.facet: [
+         {
+           id:       'Header',
+           purpose:  #STANDARD,
+           type:     #IDENTIFICATION_REFERENCE,
+           label:    'Header',
+           position: 10
+         },
+         {
+           id:       'Items',
+           purpose:  #STANDARD,
+           type:     #LINEITEM_REFERENCE,
+           label:    'Items',
+           position: 20,
+           targetElement: '_Items'
+         }
+       ]
+
+  @UI: {
+         lineItem: [ { position: 10, label: 'ID' } ]
+          , identification:[ { position: 10, label: 'ID' } ]
+          , selectionField: [ { position: 10 } ]
+         }
+  @Search : {
+                    defaultSearchElement: true
+                   // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                   , fuzzinessThreshold: 0.7
+    }
+
+  ID;
+
+  @UI: {
+         lineItem: [ { position: 20, label: 'Email' } ]
+       , identification:[ { position: 20, label: 'EMAIL' } ]
+       , selectionField: [ { position: 20 } ]
+         }
+  @Search : {
+                    defaultSearchElement: true
+                  // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                  , fuzzinessThreshold: 0.7
+   }
+  EMAIL;
+
+  @UI: {
+         lineItem: [ { position: 30, label: 'First Name' } ]
+       , identification:[ { position: 30, label: 'FIRSTNAME' } ]
+       , selectionField: [ { position: 30 } ]
+         }
+  @Search : {
+                    defaultSearchElement: true
+                  // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                  , fuzzinessThreshold: 0.7
+   }
+  FIRSTNAME;
+
+  @UI: {
+         lineItem: [ { position: 40, label: 'Last Name' } ]
+       , identification:[ { position: 40, label: 'LASTNAME' } ]
+         }
+  LASTNAME;
+
+  @UI: {
+         lineItem: [ { position: 50, label: 'Country' } ]
+       , identification:[ { position: 50, label: 'COUNTRY' } ]
+         }
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Country',
+                                                 element: 'Country' },
+                                                 useForValidation: true }]
+  COUNTRY;
+
+  @UI: {
+         lineItem: [ { position: 60, label: 'Create ON' } ]
+       , identification:[ { position: 60, label: 'CREATEON' } ]
+         }
+  CREATEON;
+
+  @UI: {
+         lineItem: [ { position: 70, label: 'Delivery Date' } ]
+       , identification:[ { position: 70, label: 'DELIVERYDATE' } ]
+         }
+  DELIVERYDATE;
+
+  @UI: {
+         lineItem: [ { position: 80, label: 'Order Status' } ]
+       , identification:[ { position: 80, label: 'ORDERSTATUS' } ]
+         }
+
+    
+  @Consumption.valueHelpDefinition: [
+    { entity:
+        {name: 'ZDOM_ORDERSTATUS' , element: 'value_low' },
+        distinctValues: true,
+        useForValidation: true,
+        additionalBinding: [{localElement: 'ORDERSTATUS'}]   
+   }]
+  ORDERSTATUS;
+
+  @UI: {
+         lineItem: [ { position: 90, label: 'Imageurl' } ]
+       , identification:[ { position: 80, label: 'IMAGEURL' } ]
+         }
+  IMAGEURL;
+
+  @UI.hidden: true
+  local_last_changed_at;
+
+}

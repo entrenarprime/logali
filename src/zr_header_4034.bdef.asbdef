@@ -1,0 +1,111 @@
+managed implementation in class zbp_r_header_4034 unique;
+strict ( 2 );
+with draft;
+
+define behavior for zr_header_4034 alias Header
+persistent table zheader_4034
+draft table zheader_4034_d
+lock master
+//total etag LastChangedAt
+total etag last_changed_at
+authorization master ( global, instance )
+//etag master LocalLastChangedAt
+etag master local_last_changed_at
+early numbering
+{
+  create;
+  update ( precheck );
+  delete;
+
+
+  association _Items
+  {
+    create ( features : instance, authorization : update );
+    with draft;
+  }
+
+  field ( readonly ) id,
+  local_created_at,
+  local_created_by,
+  local_last_changed_at,
+  local_last_changed_by;
+
+
+  field ( mandatory ) email;
+
+  draft action Resume with additional implementation;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+
+ //validate various fields user is going to enter on the UI
+ validation validateEmail on save { field email; }
+
+ //validate various fields user is going to enter on the UI
+ validation validateOrderStatus on save { field orderstatus; }
+
+
+  draft determine action Prepare
+  {
+
+  }
+
+
+
+  mapping for zheader_4034
+    {
+      ID                    = id;
+      EMAIL                 = email;
+      FIRSTNAME             = firstname;
+      LASTNAME              = lastname;
+      COUNTRY               = country;
+      CREATEON              = createon;
+      DELIVERYDATE          = deliverydate;
+      ORDERSTATUS           = orderstatus;
+      IMAGEURL              = imageurl;
+      local_created_by      = local_created_by;
+      local_created_at      = local_created_at;
+      local_last_changed_by = local_last_changed_by;
+      local_last_changed_at = local_last_changed_at;
+      last_changed_at       = last_changed_at;
+    }
+}
+
+define behavior for zr_items_4034 alias Items
+persistent table zitems_4034
+draft table zitems_4034_d
+lock dependent by _Header
+authorization dependent by _Header
+etag master local_last_changed_at
+//early numbering
+//late numbering
+{
+
+  update;
+  delete;
+
+  field ( readonly ) ID,  IDitem, local_last_changed_at;
+
+  field ( numbering : managed) IDitem;
+
+  field ( mandatory ) Name, Quantity;
+
+  association _Header { with draft; }
+  mapping for zitems_4034
+    {
+      ID                    = id;
+      IDITEM                = iditem;
+      NAME                  = name;
+      DESCRIPTION           = description;
+      RELEASEDATE           = releasedate;
+      DISCONTINUEDDATE      = discontinueddate;
+      PRICE                 = price;
+      currencycode          = moneda;
+      HEIGHT                = height;
+      WIDTH                 = width;
+      DEPTH                 = depth;
+      QUANTITY              = quantity;
+      UNITOFMEASURE         = unitofmeasure;
+      local_last_changed_at = local_last_changed_at;
+    }
+}

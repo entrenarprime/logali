@@ -1,0 +1,153 @@
+@Metadata.layer: #CORE
+// 1 #CUSTOMER
+// 2 #PARTNER
+// 3 #LOCALIZATION
+// 4 #INDUSTRY
+// 5 #CORE
+
+//INICIO HEADER INFO
+//@Search.searchable: true
+@UI:{ headerInfo: {   typeName: 'Items',
+                      typeNamePlural: 'Items',
+                      title: {    type: #STANDARD,
+                                  label: 'Items',
+                                  value:  'ID' } },
+
+      presentationVariant: [{ sortOrder: [{ by: 'ID',
+                                            direction: #ASC },
+                                            { by: 'IDITEM',
+                                            direction: #ASC }
+                                            ],
+      visualizations: [{ type: #AS_LINEITEM }] }]
+ }
+//FIN HEADER INFO
+
+annotate view zc_items_4034 with
+{
+  //INICIO FACET
+  @UI.facet: [
+         {
+           id:       'Items',
+           purpose:  #STANDARD,
+           type:     #IDENTIFICATION_REFERENCE,
+           label:    'Items',
+           position: 10 }
+       ]
+  //FIN FACET
+  
+  @UI.hidden: true     
+  @Search : {
+                   defaultSearchElement: true
+                   // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                   , fuzzinessThreshold: 0.7
+    }
+    
+ 
+  @UI: {
+         lineItem: [ { position: 10 , importance: #HIGH, label: 'ID' } ]
+   , identification:[ { position: 10, label: 'ID' } ]
+   , selectionField: [ { position: 10} ]
+       }
+
+
+  ID;
+  @Search : {
+                   defaultSearchElement: true
+                 // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                 , fuzzinessThreshold: 0.7
+  }
+  
+  @UI.hidden: true  
+  @UI: {
+         lineItem: [ { position: 20 , importance: #HIGH, label: 'ID Item' } ]
+       , identification:[ { position: 20, label: 'ID Item' } ]
+       , selectionField: [ { position: 20 } ]
+       }
+
+  IDITEM;
+  @Search : {
+                   defaultSearchElement: true
+                 // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                 , fuzzinessThreshold: 0.7
+  }
+  @UI: {
+         lineItem: [ { position: 30 , importance: #HIGH, label: 'Name' } ]
+            , identification:[ { position: 30, label: 'Name' } ]
+            , selectionField: [ { position: 30} ]
+
+       }
+
+
+  NAME;
+  @Search : {
+                   defaultSearchElement: true
+                 // 10% (0.1) -- 70% (0.7) -- 0.1 to 1
+                 , fuzzinessThreshold: 0.7
+  }
+  @UI: {
+         lineItem: [ { position: 40, label: 'Description' } ]
+         , identification:[ { position: 40, label: 'Description' } ]
+         , selectionField: [ { position: 40} ]
+         }
+
+
+  DESCRIPTION;
+  @UI: {
+         lineItem: [ { position: 50, label: 'Release Date' } ]
+         , identification:[ { position: 50, label: 'Release Date' } ]
+         }
+  RELEASEDATE;
+  @UI: {
+         lineItem: [ { position: 60, label: 'Discontinued Date' } ]
+         , identification:[ { position: 60, label: 'Discontinued Date' } ]
+         }
+  DISCONTINUEDDATE;
+  @UI: {
+         lineItem: [ { position: 70, label: 'Price' } ]
+        , identification:[ { position: 70, label: 'Price' } ]
+         }
+  PRICE;
+  @UI: {
+         lineItem: [ { position: 80, label: 'Moneda' } ]
+       , identification:[ { position: 80, label: 'Moneda' } ]
+         }
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_CurrencyStdVH',
+                                                 element: 'Currency' },
+                                       useForValidation: true } ]         
+  CURRENCYCODE;
+  @UI: {
+         lineItem: [ { position: 90, label: 'Height' } ]
+       , identification:[ { position: 90, label: 'Height' } ]
+         }
+  
+  HEIGHT;
+  
+  @UI: {
+         lineItem: [ { position: 100, label: 'Width' } ]
+         , identification:[ { position: 100, label: 'Width' } ]
+         }
+  WIDTH;
+  @UI: {
+         lineItem: [ { position: 110, label: 'Depth' } ]
+       , identification:[ { position: 110, label: 'Depth' } ]
+         }
+  DEPTH;
+  @UI: {
+         lineItem: [ { position: 120, label: 'Quantity' } ]
+       , identification:[ { position: 120, label: 'Quantity' } ]         
+         }
+  QUANTITY;
+  @UI: {
+         lineItem: [ { position: 130, label: 'Unit of Measure' } ]
+       , identification:[ { position: 130, label: 'Unit of Measure' } ]
+         }
+         
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'I_UnitOfMeasure',
+                                                 element: 'UnitOfMeasure' },
+                                                 useForValidation: true }]
+                                                          
+  UNITOFMEASURE;
+  @UI.hidden: true
+  local_last_changed_at;
+
+}
